@@ -11,17 +11,22 @@ app.config(function($stateProvider, $urlRouterProvider){
   $urlRouterProvider.otherwise('/')
 })
 
-// app.factory
-//
-// app.service
-
 app.controller('addCtrl', function($scope, $state,StockPlace,HolderOfStocks){
   console.log('aboutCtrl');
-  $scope.stockList=[]
   $scope.newStock={}
   $scope.getStocks = function(){
+    var stockListpull = []
+    $scope.stocks = HolderOfStocks.giveArray() || [];
+    stockListpull.push($scope.stocks)
     console.log('thing done',$scope.stocker);
+    console.log('listP', stockListpull);
+    console.log('listw', stockListpull[0].Symbol);
     var theStock = $scope.stocker.toUpperCase()
+      // stockListpull[0].forEach( function(x){
+      //   if (x.Symbol === theStock){
+      //     return alert(`#{theStock} is already in your list.`)
+      //   }
+      // })
     StockPlace.gettingStock(theStock)
     .then(function(res){
       console.log('res', res.data);
